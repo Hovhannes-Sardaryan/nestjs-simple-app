@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
-
+  console.log('Hello _____--____ There');
   await app.listen(3000);
 }
 bootstrap();
