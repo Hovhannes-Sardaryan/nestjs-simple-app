@@ -14,10 +14,10 @@ export class UsersRepository extends Repository<Users> {
 
     const salt = await bcrypt.genSalt();
     const hashedPass = await bcrypt.hash(password, salt);
-    const user = this.create({ first_name, last_name, password: hashedPass });
+    const users = this.create({ first_name, last_name, password: hashedPass });
 
     try {
-      await this.save(user);
+      await this.save(users);
     } catch (error) {
       if (Number(error.code) === 23505) {
         // name Dublicate
