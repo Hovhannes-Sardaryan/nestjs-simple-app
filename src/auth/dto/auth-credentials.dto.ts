@@ -14,8 +14,5 @@ export class AuthCredentialsDto {
   @IsString()
   @MinLength(8, { message: 'Password is too weak' })
   @MaxLength(32)
-  // @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-  //   message: 'Password is too weak',
-  // })
   password: string;
 }

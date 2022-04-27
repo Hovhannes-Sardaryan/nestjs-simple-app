@@ -11,7 +11,7 @@ export class TasksRepository extends Repository<Task> {
     const query = this.createQueryBuilder('task');
     query.where({ users });
 
-    if (status) query.andWhere('task.status = :status', { status });
+    if (status) query.andWhere('(LOWER(task.status) = LOWER(:status))', { status });
 
     if (search) {
       query.andWhere(
