@@ -9,11 +9,11 @@ export default {
   logging: process.env.TYPEORM_LOGGING === 'true',
   entities: ['**/*.entity.ts'],
   autoLoadEntities: true,
-  // migrations: ['migrations/**/*.ts'],
-  // migrationsRun: process.env.TYPEORM_MIGRATIONS_RUN === 'true',
+  migrations: ['migrations/**/*.ts'],
+  migrationsRun: process.env.TYPEORM_MIGRATIONS_RUN === 'true',
   synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
   cli: {
     entitiesDir: 'src',
-    // migrationsDir: 'migrations',
+    migrationsDir: 'migrations',
   },
 };

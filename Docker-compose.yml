@@ -13,7 +13,7 @@ services:
     env_file:
       - .env
     ports:
-      - 8080:3000
+      - ${TYPEORM_PORT}:${APP_PORT}
     depends_on:
       - postgres
     volumes:
@@ -30,7 +30,6 @@ services:
       PG_DATA: /var/lib/postgresql/data
     ports:
       - ${APP_PORT}:${POSTGRES_DB_PORT}
-      # - 5432:5432
     volumes:
       - ./pgdata/data:/var/lib/postgresql/data
   pgadmin:

@@ -1,18 +1,17 @@
 
-FROM node:14
+FROM node:14 AS node_base
 
 # Create app directory
-WORKDIR /hovo-nest/src/app
+WORKDIR /nest-app/src/app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json ./
 
-# RUN npm config delete registry
-# RUN npm install --frozen-lockfile && yarn cache clean
+RUN npm config delete registry
+RUN npm install --frozen-lockfile && yarn cache clean
 
-RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 

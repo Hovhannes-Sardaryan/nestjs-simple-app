@@ -11,9 +11,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TasksModule,
     BootstrapConfigModule,
     // BootstrapTypeormModule,
-    // ConfigModule.forRoot({
-    //   isGlobal: true,
-    // }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),

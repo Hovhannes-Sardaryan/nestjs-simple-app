@@ -3,4 +3,5 @@ export default async () => ({
   database: (await import('./database')).default,
   swagger: (await import('./swagger')).default,
   cors: (await import('./cors')).default,
+  cognito: (await import('./cognito')).default,
 });
