@@ -9,6 +9,9 @@ WORKDIR /hovo-nest/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
+# RUN npm config delete registry
+# RUN npm install --frozen-lockfile && yarn cache clean
+
 RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production

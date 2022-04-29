@@ -1,12 +1,19 @@
 import { Module } from '@nestjs/common';
+import { TasksModule } from './modules/tasks/tasks.module';
+import { AuthModule } from './modules/auth/auth.module';
+// import { BootstrapTypeormModule } from './bootstrap/typeorm.module';
+import { BootstrapConfigModule } from './bootstrap/config.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TasksModule } from './tasks/tasks.module';
-import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     TasksModule,
+    BootstrapConfigModule,
+    // BootstrapTypeormModule,
+    // ConfigModule.forRoot({
+    //   isGlobal: true,
+    // }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -15,9 +22,9 @@ import { ConfigModule } from '@nestjs/config';
       url: process.env.DATABASE_URL,
       host: process.env.HOST,
       port: parseInt(process.env.POSTGRES_DB_PORT, 10),
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB_NAME,
+      username: process.env.TYPEORM_USERNAME,
+      password: process.env.TYPEORM_PASSWORD,
+      database: process.env.TYPEORM_DATABASE,
 
       autoLoadEntities: true,
       synchronize: true,
@@ -25,6 +32,6 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
   ],
   // controllers: [],
-  // providers: [],
+  providers: [ConfigService],
 })
 export class AppModule {}

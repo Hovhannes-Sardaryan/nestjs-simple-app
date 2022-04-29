@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { setupSwagger } from './bootstrap/setup-swager';
 import { TransformInterceptor } from './transform.interseptor';
 
 async function bootstrap() {
@@ -8,6 +9,9 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
+
+  setupSwagger(app);
+
   await app.listen(3000);
 }
 bootstrap();
