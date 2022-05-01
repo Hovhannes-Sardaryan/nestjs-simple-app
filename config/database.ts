@@ -1,13 +1,13 @@
 export default {
-  name: process.env.TYPEORM_DATABASE,
   type: process.env.TYPEORM_TYPE || 'postgres',
-  host: process.env.TYPEORM_HOST || 'localhost',
+  host: process.env.HOST || 'localhost',
   username: process.env.TYPEORM_USERNAME || 'postgres',
   password: process.env.TYPEORM_PASSWORD || 'guest',
   database: process.env.TYPEORM_DATABASE || 'core',
-  port: parseInt(process.env.TYPEORM_PORT, 10) || 3300,
-  logging: process.env.TYPEORM_LOGGING === 'true',
-  entities: ['**/*.entity.ts'],
+  url: process.env.DATABASE_URL,
+  port: parseInt(process.env.POSTGRES_DB_PORT, 10),
+  // logging: process.env.TYPEORM_LOGGING === 'true',  //  warning //  need to be fixed
+  // entities: ['**/*.entity.ts'],  //   neet to be fixed
   autoLoadEntities: true,
   migrations: ['migrations/**/*.ts'],
   migrationsRun: process.env.TYPEORM_MIGRATIONS_RUN === 'true',
