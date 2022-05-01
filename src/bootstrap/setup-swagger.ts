@@ -6,7 +6,7 @@ import { Request, Response, NextFunction } from 'express';
 export const setupSwagger = (app: INestApplication) => {
   const configService = app.get(ConfigService);
 
-  if (configService.get<string>('NODE_ENV') === 'development') {
+  if (configService.get<string>('NODE_ENV') === 'dev') {
     const swaggerPath = configService.get<string>('swagger.swaggerPath');
     const swaggerHost = configService.get<string>('swagger.swaggerHost');
     const version = configService.get<string>('app.version');
@@ -31,7 +31,6 @@ export const setupSwagger = (app: INestApplication) => {
         .addServer(swaggerHost)
         .build(),
     );
-
     SwaggerModule.setup(swaggerPath, app, document);
   }
 };
