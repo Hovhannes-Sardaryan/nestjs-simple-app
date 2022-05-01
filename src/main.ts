@@ -4,6 +4,8 @@ import { AppModule } from './app.module';
 import { setupSwagger } from './bootstrap/setup-swagger';
 import { TransformInterceptor } from './transform.interseptor';
 
+global['fetch'] = require('node-fetch');
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
