@@ -1,10 +1,6 @@
 import { AwsAuthConfig } from './aws-auth.config';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import {
-  AuthenticationDetails,
-  CognitoUser,
-  CognitoUserPool,
-} from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js';
 
 @Injectable()
 export class AwsAuthService {
