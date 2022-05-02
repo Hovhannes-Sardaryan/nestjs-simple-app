@@ -3,30 +3,70 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AuthCredentialsDto } from './api-response/auth-credentials.dto';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from '../../common/interfaces/jwt-payload.interface';
+
+import { AuthConfig } from './auth.config';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 
 @Injectable()
 export class AuthService {
+  private userPool: CognitoUserPool;
+  // private sessionUserAttributes: {};
   constructor(
     @InjectRepository(UsersRepository)
+    private readonly authConfig: AuthConfig,
     private userRepository: UsersRepository,
-    private jwtService: JwtService,
-  ) {}
-
-  async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    await this.userRepository.createUser(authCredentialsDto);
+  ) {
+    this.userPool = new CognitoUserPool({
+      UserPoolId: this.authConfig.userPoolId,
+      ClientId: this.authConfig.clientId,
+    });
   }
 
-  async signIn(
+
+
+  async registerUser(authCredentialsDto: AuthCredentialsDto): Promise<object> {
+    const { name, email, password } = authCredentialsDto;
+    return new Promise((resolve, reject) => {
+      return this.userPool.signUp(
+        name,
+        password,
+        [new CognitoUserAttribute({ Name: 'email', Value: email })],
+        null,
+        (error, result) => {
+          if (!result) {
+            reject(error);
+          } else {
+            resolve(result.user);
+          }
+        },
+      );
+    });
+    // await this.userRepository.createUser(authCredentialsDto);
+  }
+
+  async login(
     authCredentialsDto: AuthCredentialsDto,
-  ): Promise<{ accessToken: string }> {
-    const { first_name, last_name, password } = authCredentialsDto;
-    const user = await this.userRepository.findOne({ first_name, last_name });
-    if (user && bcrypt.compare(password, user.password)) {
-      const payload: JwtPayload = { first_name, last_name };
-      const accessToken: string = await this.jwtService.sign(payload);
-      return { accessToken };
+  ): Promise<object> {
+    const { name, email, password } = authCredentialsDto;
+
+    const authenticationDetails = new AuthenticationDetails({
+      Username: name,
+      Password: password,
+    });
+    const userData = {
+      Username: name,
+      Pool: this.userPool,
+    };
+    const newUser = new CognitoUser(userData);
+
+    const user = await this.userRepository.findOne({ name, email });
+    if (authCredentialsDto && bcrypt.compare(password, user.password)) {
+      return new Promise((resolve, reject) => {
+        return newUser.authenticateUser(authenticationDetails, {
+          onSuccess: result => resolve(result),
+          onFailure: err => reject(err),
+        });
+      });
     } else {
       throw new UnauthorizedException('Please write correct credentials');
     }

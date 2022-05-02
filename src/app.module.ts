@@ -5,7 +5,7 @@ import { BootstrapTypeormModule } from './bootstrap/typeorm.module';
 import { BootstrapConfigModule } from './bootstrap/config.module';
 import { ConfigService } from '@nestjs/config';
 import { AuthUserMiddleware } from './common/middlewares/auth-user.middleware';
-import { AwsAuthModule } from './modules/aws-auth/aws-auth.module';
+// import { AwsAuthModule } from './modules/aws-auth/aws-auth.module';
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { AwsAuthModule } from './modules/aws-auth/aws-auth.module';
     BootstrapConfigModule,
     BootstrapTypeormModule,
     AuthModule,
-    AwsAuthModule,
+    // AwsAuthModule,
   ],
   // controllers: [],
   providers: [ConfigService],

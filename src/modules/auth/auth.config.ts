@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class AwsAuthConfig {
+export class AuthConfig {
     public userPoolId: string = process.env.COGNITO_USER_POOL_ID;
     public clientId: string = process.env.COGNITO_CLIENT_ID;
     public region: string = process.env.COGNITO_REGION;

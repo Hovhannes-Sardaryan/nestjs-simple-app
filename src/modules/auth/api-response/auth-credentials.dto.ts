@@ -5,18 +5,18 @@ export class AuthCredentialsDto {
   @ApiProperty()
   @IsString()
   @MinLength(2)
-  @MaxLength(20)
-  first_name: string;
+  @MaxLength(30)
+  name: string;
 
   @ApiProperty()
   @IsString()
-  @MinLength(2)
-  @MaxLength(20)
-  last_name: string;
+  @MinLength(7)
+  @MaxLength(32)
+  email: string;
 
   @ApiProperty()
   @IsString()
-  @MinLength(8, { message: 'Password is too weak' })
+  @MinLength(8)
   @MaxLength(32)
   password: string;
 }

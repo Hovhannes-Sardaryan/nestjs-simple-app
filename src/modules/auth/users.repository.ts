@@ -10,18 +10,18 @@ import * as bcrypt from 'bcrypt';
 @EntityRepository(Users)
 export class UsersRepository extends Repository<Users> {
   async createUser(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    const { first_name, last_name, password } = authCredentialsDto;
+    const { name, email, password } = authCredentialsDto;
 
     const salt = await bcrypt.genSalt();
     const hashedPass = await bcrypt.hash(password, salt);
-    const users = this.create({ first_name, last_name, password: hashedPass });
+    const users = this.create({ name, email, password: hashedPass });
 
     try {
       await this.save(users);
     } catch (error) {
       if (Number(error.code) === 23505) {
         // name Dublicate
-        throw new ConflictException('first name or last name already exists!');
+        throw new ConflictException('User with that name already exists!');
       } else {
         throw new InternalServerErrorException();
       }

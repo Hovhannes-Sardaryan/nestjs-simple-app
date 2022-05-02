@@ -9,20 +9,25 @@ export class Users {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: 'Name', description: 'First Name' })
+  @ApiProperty({ example: 'Name', description: 'Name' })
   @Column({ unique: true })
-  first_name: string;
+  name: string;
 
-  @ApiProperty({ example: 'Surname', description: 'Surname' })
+  // @ApiProperty({ example: 'Surname', description: 'Surname' })
+  // @Column({ unique: true })
+  // last_name: string;
+
+  @ApiProperty({ example: 'example@example.com', description: 'Email' })
   @Column({ unique: true })
-  last_name: string;
+  email: string;
+
 
   @ApiProperty({ example: 'password', description: 'Password (At least 8 characters)' })
   @Column()
   password: string;
 
   @ApiProperty({ example: '[]', description: 'Tasks (Array of objects)' })
-  @OneToMany((_type) => Task, (task) => task.users, { eager: true })
+  @OneToMany(() => Task, (task) => task.users, { eager: true })
   @Exclude({ toPlainOnly: true })
   tasks: Task[];
 
